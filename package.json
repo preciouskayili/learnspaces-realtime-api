@@ -1,7 +1,7 @@
 {
   "name": "learnspaces-api",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/"
   },
   "dependencies": {
     "@hocuspocus/extension-database": "^2.13.5",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
-    "tsx": "^4.7.1"
+    "tsx": "^4.7.1",
+    "typescript": "^5.5.4"
   }
 }
