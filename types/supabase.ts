@@ -74,7 +74,8 @@ export type Database = {
         Row: {
           created_at: string
           created_by: string
-          document: Json | null
+          document: string | null
+          document_legacy: Json | null
           id: string
           space_id: string
           title: string
@@ -82,7 +83,8 @@ export type Database = {
         Insert: {
           created_at?: string
           created_by: string
-          document?: Json | null
+          document?: string | null
+          document_legacy?: Json | null
           id?: string
           space_id: string
           title: string
@@ -90,7 +92,8 @@ export type Database = {
         Update: {
           created_at?: string
           created_by?: string
-          document?: Json | null
+          document?: string | null
+          document_legacy?: Json | null
           id?: string
           space_id?: string
           title?: string

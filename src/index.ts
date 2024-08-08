@@ -1,4 +1,4 @@
-import { Hocuspocus, Server } from "@hocuspocus/server";
+import { cors } from "hono/cors";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { hocuspocusServer } from "./services/hocuspocus";
@@ -6,6 +6,7 @@ import router from "./routes";
 
 const app = new Hono();
 
+app.use(`/${process.env.API_VERSION}/*`, cors());
 app.route(`${process.env.API_VERSION}/`, router);
 
 const port = 8787;

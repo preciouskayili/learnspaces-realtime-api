@@ -6,9 +6,6 @@ const router = new Hono();
 
 router.use("*", authMiddleware);
 
-router.get(
-  "/collaborate/:documentId",
-  CollaborationController.getCollaborationUrl
-);
+router.get("/:documentId", CollaborationController.getCollaborationUrl);
 
 export default router;
