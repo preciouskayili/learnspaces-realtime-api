@@ -6,7 +6,10 @@ import router from "./routes";
 
 const app = new Hono();
 
-app.use(`/${process.env.API_VERSION}/*`, cors());
+app.use(
+  `/${process.env.API_VERSION}/*`,
+  cors({ credentials: true, origin: "http://localhost:3000" })
+);
 app.route(`${process.env.API_VERSION}/`, router);
 
 const port = 8787;

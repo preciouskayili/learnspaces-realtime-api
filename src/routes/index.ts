@@ -1,8 +1,8 @@
 import { Hono } from "hono";
-import collaborationRoutes from "./collaboration";
+import authorizationRoutes from "./authorize";
 
 const router = new Hono();
 
-router.route("/collaboration", collaborationRoutes);
+router.route("/authorize", authorizationRoutes);
 
 export default router;
