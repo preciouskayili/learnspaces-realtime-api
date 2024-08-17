@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Build
-        run: pnpm run build --if-present
+        run: pnpm run build
       - name: Start
         run: pnpm start
       - name: Create .env file
