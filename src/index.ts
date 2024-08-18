@@ -17,6 +17,14 @@ app.use(
   })
 );
 
+app.use(
+  `/`,
+  cors({
+    origin: process.env.CLIENT_ORIGIN!,
+    credentials: true,
+  })
+);
+
 app.route(`${process.env.API_VERSION}/`, router);
 
 const port = 8787;
