@@ -20,7 +20,6 @@ const port = 8787;
 
 console.log(`Server is running on port ${port}`);
 console.log(`Peer Server running on port 9000`);
-console.log(`Press Ctrl+C to quit`);
 
 serve({
   fetch: app.fetch,
