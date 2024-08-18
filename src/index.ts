@@ -12,7 +12,7 @@ PeerServer({ port: 9000, path: `${process.env.API_VERSION}/peerjs` });
 app.use(
   `/${process.env.API_VERSION}/*`,
   cors({
-    origin: ["*"],
+    origin: [process.env.CLIENT_ORIGIN!],
     allowHeaders: ["Authorization", "Content-Type"],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     maxAge: 86400,
