@@ -11,7 +11,12 @@ PeerServer({ port: 9000, path: `${process.env.API_VERSION}/peerjs` });
 
 app.use(
   `/${process.env.API_VERSION}/*`,
-  cors({ credentials: true, origin: process.env.CLIENT_ORIGIN! })
+  cors({
+    origin: process.env.CLIENT_ORIGIN!,
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
 );
 
 app.route(`${process.env.API_VERSION}/`, router);
