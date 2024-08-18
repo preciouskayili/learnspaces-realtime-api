@@ -13,6 +13,7 @@ app.use(
   `/${process.env.API_VERSION}/*`,
   cors({
     origin: process.env.CLIENT_ORIGIN!,
+    allowHeaders: ["Authorization"],
     credentials: true,
   })
 );
