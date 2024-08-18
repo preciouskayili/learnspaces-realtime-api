@@ -13,8 +13,6 @@ app.use(
   `/${process.env.API_VERSION}/*`,
   cors({
     origin: process.env.CLIENT_ORIGIN!,
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
