@@ -15,12 +15,6 @@ export async function authMiddleware(c: Context, next: Next) {
   const authToken = authToken0! + authToken1;
 
   if (!authToken) {
-    console.log(
-      authToken,
-      process.env.SUPABASE_APP_ID,
-      `sb-${process.env.SUPABASE_APP_ID}-auth-token.0`
-    );
-
     return c.json({ error: "No token provided" }, 401);
   }
 
