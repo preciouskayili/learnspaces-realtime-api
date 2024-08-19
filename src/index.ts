@@ -10,7 +10,7 @@ const app = new Hono();
 PeerServer({ port: 9000, path: `${process.env.API_VERSION}/peerjs` });
 
 app.use(
-  `/${process.env.API_VERSION}/*`,
+  `/*`,
   cors({
     origin: [`${process.env.CLIENT_ORIGIN}`],
     allowHeaders: ["Authorization", "Content-Type"],
