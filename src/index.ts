@@ -8,7 +8,7 @@ import { PeerServer } from "peer";
 const app = new Hono();
 
 app.use(
-  `/*`,
+  `*`,
   cors({
     origin: [`${process.env.CLIENT_ORIGIN}`],
     allowHeaders: ["Authorization", "Content-Type"],
