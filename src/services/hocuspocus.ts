@@ -14,24 +14,28 @@ export const hocuspocusServer = Server.configure({
             .select("document")
             .eq("id", documentName)
             .single();
-
+          console.log("we are here are we gonna pass");
           if (error) reject(error);
 
           if (data?.document) {
             const uint8Array = base64ToUint8Array(data.document);
+            console.log("Uint8 Array: ", uint8Array);
             resolve(uint8Array);
           } else {
+            console.log("Error dey");
             resolve(null);
           }
         });
       },
       store: async ({ documentName, state }) => {
         const base64String = uint8ArrayToBase64(state);
+        console.log("Storing", base64String);
 
         await supabase
           .from("pods")
           .update({ document: base64String })
-          .eq("id", documentName).single();
+          .eq("id", documentName)
+          .single();
       },
     }),
   ],
