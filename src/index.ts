@@ -7,8 +7,6 @@ import { PeerServer } from "peer";
 
 const app = new Hono();
 
-PeerServer({ port: 9000, path: `${process.env.API_VERSION}/peerjs` });
-
 app.use(
   `/*`,
   cors({
@@ -18,6 +16,8 @@ app.use(
     maxAge: 86400,
   })
 );
+
+PeerServer({ port: 9000, path: `${process.env.API_VERSION}/peerjs` });
 
 app.route(`${process.env.API_VERSION}/`, router);
 
