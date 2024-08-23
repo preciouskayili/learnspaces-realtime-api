@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { hocuspocusServer } from "./services/hocuspocus";
 import router from "./routes";
 import { PeerServer } from "peer";
+import { createWorker } from "./config/mediasoup-config";
 
 const app = new Hono();
 
@@ -16,6 +17,10 @@ app.use(
     maxAge: 86400,
   })
 );
+
+(async () => {
+  await createWorker();
+})();
 
 PeerServer({ port: 9000, path: `${process.env.API_VERSION}/peerjs` });
 
