@@ -22,7 +22,7 @@ export const supabaseClient = (token: string): SupabaseClient<Database> =>
   createClient<Database>(supabaseUrl, supabaseAnonKey, {
     global: {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `${token}`,
       },
     },
   });

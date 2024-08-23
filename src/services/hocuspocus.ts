@@ -12,7 +12,7 @@ export const hocuspocusServer = Server.configure({
 
     const supabase = supabaseClient(token);
     const { data, error } = await supabase.auth.getUser();
-    console.log(data, token);
+
     if (error || !data.user) {
       throw new Error("Invalid token");
     }
@@ -37,7 +37,6 @@ export const hocuspocusServer = Server.configure({
 
           if (data?.document) {
             const uint8Array = base64ToUint8Array(data.document);
-            console.log("Document acquired", uint8Array);
 
             resolve(uint8Array);
           } else {
@@ -47,7 +46,6 @@ export const hocuspocusServer = Server.configure({
       },
       store: async ({ documentName, state, context }) => {
         const base64String = uint8ArrayToBase64(state);
-        console.log("Storing", base64String);
 
         const supabase = supabaseClient(context.token);
         await supabase
