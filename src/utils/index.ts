@@ -1,4 +1,4 @@
-import { supabase } from "../config/supabase";
+import { supabaseClient } from "../config/supabase";
 
 export function uint8ArrayToBase64(uint8Array: Uint8Array) {
   return Buffer.from(uint8Array).toString("base64");
@@ -9,7 +9,13 @@ export function base64ToUint8Array(base64String: string) {
   return new Uint8Array(buffer);
 }
 
-export async function isPodMember(podId: string, userId: string) {
+export async function isPodMember(
+  podId: string,
+  userId: string,
+  token: string
+) {
+  const supabase = supabaseClient(token);
+
   const { data, error } = await supabase
     .from("pods")
     .select(

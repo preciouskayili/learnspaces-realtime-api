@@ -6,7 +6,7 @@ export class UserController {
     const token = c.req.header("Authorization");
 
     if (token) {
-      setCookie(c, "session", token.split(" ")[1]);
+      setCookie(c, "session", token);
       return c.json({ message: "User authorized" }, 201);
     }
 
