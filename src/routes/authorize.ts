@@ -4,8 +4,6 @@ import { UserController } from "../controllers/user";
 
 const router = new Hono();
 
-router.use("*", authMiddleware);
-
 router.get("/", UserController.authorize);
 
 export default router;

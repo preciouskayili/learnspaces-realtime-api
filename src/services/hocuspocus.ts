@@ -1,8 +1,7 @@
-// hocuspocus.ts
 import { Server } from "@hocuspocus/server";
 import { Database } from "@hocuspocus/extension-database";
 import { base64ToUint8Array, uint8ArrayToBase64 } from "../utils";
-import supabaseClient from "../config/supabase";
+import { supabaseClient } from "../config/supabase";
 
 export const hocuspocusServer = Server.configure({
   port: 1234,

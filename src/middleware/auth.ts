@@ -1,19 +1,18 @@
 import { Context, Next } from "hono";
-import supabaseClient from "../config/supabase";
+import { getCookie } from "hono/cookie";
+import { supabaseClient } from "../config/supabase";
 
 export async function authMiddleware(c: Context, next: Next) {
-  const authHeader = c.req.header("Authorization");
+  const session = getCookie(c, "session");
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!session) {
     return c.json({ error: "No token provided" }, 401);
   }
 
-  const accessToken = authHeader.split(" ")[1];
-
   try {
-    const supabase = supabaseClient(accessToken);
+    const supabase = supabaseClient(session);
 
-    const { data, error } = await supabase.auth.getUser(accessToken);
+    const { data, error } = await supabase.auth.getUser();
 
     if (error || !data.user) {
       return c.json({ error: "Invalid token" }, 401);
