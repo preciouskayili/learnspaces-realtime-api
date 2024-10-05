@@ -3,8 +3,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { hocuspocusServer } from "./services/hocuspocus";
 import router from "./routes";
-import { PeerServer } from "peer";
-import { createWorker } from "./config/mediasoup-config";
+import { Server } from "socket.io";
 
 const app = new Hono();
 
@@ -18,22 +17,15 @@ app.use(
   })
 );
 
-(async () => {
-  await createWorker();
-})();
-
-PeerServer({ port: 9000, path: `${process.env.API_VERSION}/peerjs` });
-
 app.route(`${process.env.API_VERSION}/`, router);
 
-const port = 8787;
+const APP_PORT = process.env.PORT;
 
-console.log(`Server is running on port ${port}`);
-console.log(`Peer Server running on port 9000`);
+console.log(`Server is running on port ${APP_PORT}`);
 
 serve({
   fetch: app.fetch,
-  port,
+  port: Number(APP_PORT),
 });
 
 hocuspocusServer.listen();
