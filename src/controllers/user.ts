@@ -1,15 +1,14 @@
-import { Context } from "hono";
-import { setCookie } from "hono/cookie";
+import { Request, Response } from "express";
 
 export class UserController {
-  static async authorize(c: Context) {
-    const token = c.req.header("Authorization");
+  static authorize(req: Request, res: Response): void {
+    const token = req.header("Authorization");
 
     if (token) {
-      setCookie(c, "session", token);
-      return c.json({ message: "User authorized" }, 201);
+      res.cookie("session", token);
+      res.status(201).json({ message: "User authorized" });
     }
 
-    return c.json({ message: "Failed to authorize user" }, 401);
+    res.status(401).json({ message: "Failed to authorize user" });
   }
 }

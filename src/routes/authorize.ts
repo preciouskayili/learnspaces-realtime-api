@@ -1,8 +1,7 @@
-import { Hono } from "hono";
-import { authMiddleware } from "../middleware/auth";
+import { Router } from "express";
 import { UserController } from "../controllers/user";
 
-const router = new Hono();
+const router = Router();
 
 router.get("/", UserController.authorize);
 

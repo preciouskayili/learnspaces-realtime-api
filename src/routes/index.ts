@@ -1,8 +1,8 @@
-import { Hono } from "hono";
-import authorizationRoutes from "./authorize";
+import { Router } from "express";
+import { UserController } from "../controllers/user";
 
-const router = new Hono();
+const router = Router();
 
-router.route("/authorize", authorizationRoutes);
+router.get("/authorize", UserController.authorize);
 
 export default router;
