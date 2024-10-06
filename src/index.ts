@@ -14,7 +14,6 @@ app.use(
     allowHeaders: ["Authorization", "Content-Type"],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     maxAge: 86400,
-    credentials: true,
   })
 );
 
