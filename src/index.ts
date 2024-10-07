@@ -1,6 +1,6 @@
-// Import necessary modules
 import cors from "cors";
 import express, { Request, Response, NextFunction } from "express";
+import expressWebsockets from "express-ws";
 import { hocuspocusServer } from "./services/hocuspocus";
 import router from "./routes";
 import helmet from "helmet";
@@ -10,25 +10,17 @@ import rateLimit from "express-rate-limit";
 import compression from "compression";
 import dotenv from "dotenv";
 
-// Load environment variables from .env file (if applicable)
 dotenv.config();
 
-// Initialize Express app
-const app = express();
+// Initialize Express app with WebSocket support
+const apiVersion = process.env.API_VERSION || "v1";
+const { app } = expressWebsockets(express());
 
-// Security Headers
+// Middleware
 app.use(helmet());
-
-// Request Logging
-app.use(morgan("combined"));
-
-// Enable Compression
+app.use(morgan("dev"));
 app.use(compression());
-
-// Parse JSON bodies
 app.use(express.json());
-
-// Parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
 // CORS Configuration
@@ -52,9 +44,15 @@ const apiLimiter = rateLimit({
       "Too many requests from this IP, please try again after 15 minutes.",
   },
 });
+``;
 
-// Apply rate limiting to all API routes
-app.use(`/${process.env.API_VERSION}/`, apiLimiter, router);
+// WebSocket Route for Collaboration
+app.ws(`/${apiVersion}/collaboration`, (websocket, request) => {
+  hocuspocusServer.handleConnection(websocket, request);
+});
+
+// Apply rate limiting and API routes
+app.use(`/${apiVersion}/`, apiLimiter, router);
 
 // 404 Handler
 app.use((_req: Request, res: Response, _next: NextFunction) => {
@@ -64,21 +62,14 @@ app.use((_req: Request, res: Response, _next: NextFunction) => {
 // Global Error Handler
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
-  res.status(500).json({ message: "Internal Server Error" });
+  if (!res.headersSent) {
+    // Prevent sending headers if already sent
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
-
-// Define the port from environment variables or default to 3000
-const APP_PORT = process.env.PORT || 3000;
-
-console.log(`Server is running on port ${APP_PORT}`);
-
-// Create an HTTP server
-const server = createServer(app);
 
 // Start the Express server
-server.listen(APP_PORT, () => {
+const APP_PORT = process.env.PORT || 3000;
+app.listen(APP_PORT, () => {
   console.log(`Express server listening on port ${APP_PORT}`);
 });
-
-// Initialize and start the Hocuspocus server
-hocuspocusServer.listen();

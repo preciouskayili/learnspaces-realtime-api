@@ -7,8 +7,8 @@ export class UserController {
     if (token) {
       res.cookie("session", token);
       res.status(201).json({ message: "User authorized" });
+    } else {
+      res.status(401).json({ message: "Failed to authorize user" });
     }
-
-    res.status(401).json({ message: "Failed to authorize user" });
   }
 }

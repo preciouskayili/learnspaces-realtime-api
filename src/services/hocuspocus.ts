@@ -4,7 +4,6 @@ import { base64ToUint8Array, uint8ArrayToBase64 } from "../utils";
 import { supabaseClient } from "../config/supabase";
 
 export const hocuspocusServer = Server.configure({
-  port: 1234,
   async onAuthenticate({ token }) {
     if (!token) {
       throw new Error("No token provided");
