@@ -44,7 +44,9 @@ export const hocuspocusServer = Server.configure({
         });
       },
       store: async ({ documentName, state, context }) => {
-        const base64String = uint8ArrayToBase64(state);
+        const base64String = uint8ArrayToBase64(
+          state as Uint8Array<ArrayBufferLike>
+        );
 
         const supabase = supabaseClient(context.token);
         await supabase
