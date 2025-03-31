@@ -5,7 +5,7 @@ import { hocuspocusServer } from "./services/hocuspocus";
 import router from "./routes";
 import helmet from "helmet";
 import morgan from "morgan";
-import { createServer } from "http";
+import websocketService from "./services/websocketService"; // Import WebSocket service
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 import dotenv from "dotenv";
@@ -35,10 +35,10 @@ app.use(
 
 // Middleware: Rate Limiting
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Maximum number of requests per IP within the window
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
   message: {
     message:
       "Too many requests from this IP, please try again after 15 minutes.",
@@ -52,6 +52,8 @@ app.ws(`/${apiVersion}/collaboration`, (websocket, request) => {
 });
 
 // Apply rate limiting and API routes
+// app.use(`/${apiVersion}/websocket`, websocketService);
+websocketService();
 app.use(`/${apiVersion}/`, apiLimiter, router);
 
 // 404 Handler
