@@ -10,22 +10,17 @@ export default function websocketService() {
     console.log("Client connected");
 
     ws.on("message", (message: string) => {
-      console.log(`Received: ${message}`);
-      ws.send(
-        JSON.stringify({
-          event_type: `file_update`,
-          data: { user: "preciouskayili", age: 10 },
-        })
-      );
-
       wss.clients.forEach((client) => {
-        ws.send(
-          JSON.stringify({
-            event_type: `file_update`,
-            data: { user: "preciouskayili", age: 10 },
-          })
-        );
-        client.send(`Server received your message: ${message}`);
+        const data = JSON.parse(message);
+        client.send(JSON.stringify(data));
+
+        // ws.send(
+        //   JSON.stringify({
+        //     event_type: `file_update`,
+        //     data: { user: "preciouskayili", age: 10 },
+        //   })
+        // );
+        // client.send();
       });
     });
 
