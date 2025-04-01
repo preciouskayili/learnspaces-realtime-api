@@ -19,6 +19,7 @@ const { app } = expressWebsockets(express());
 // Middleware
 app.use(helmet());
 app.use(morgan("dev"));
+app.enable("trust proxy");
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
